@@ -1,0 +1,97 @@
+---
+import { Image } from 'astro:assets';
+
+interface Props {
+  id?: string;
+}
+
+const { id } = Astro.props;
+---
+
+<section class="section-content" id={id}>
+  <!-- Section Background -->
+  <div class="bg-[#d7ecb2]">
+    <!-- Section Space -->
+    <div class="section-space">
+      <!-- Section Container -->
+      <div class="container-default">
+        <div class={`flex flex-col gap-y-20 lg:gap-y-[100px] xl:gap-y-[120px]`}>
+          <!-- Content Area Single -->
+          <div
+            class="grid items-center gap-16 lg:grid-cols-[0.55fr_minmax(0,_1fr)] lg:gap-24 xl:gap-[140px]"
+          >
+            <!-- Content Block Left -->
+            <div class="jos order-1 lg:order-2" data-jos_animation="fade-right">
+              <!-- Section Wrapper -->
+              <div>
+                <!-- Section Block -->
+                <div class="mb-5">
+                  <h2
+                    class="font-Outfit text-4xl font-medium uppercase leading-[1.15] -tracking-[2px] text-black sm:text-5xl lg:text-6xl xl:text-[70px] xxl:text-[80px]"
+                  >
+                    Where Ever You Are We Can Help
+                  </h2>
+                </div>
+                <!-- Section Block -->
+              </div>
+              <!-- Section Wrapper -->
+              <!-- Content Text -->
+              <p class="text-[#2C2C2C]">
+                No matter where you are in your digital journey, we've got the
+                right solution to meet your needs. Just starting out? Our Low
+                Code Solutions like Squarespace and WordPress are perfect for
+                getting your site up and running quickly with minimal fuss.
+              </p>
+              <p class="text-[#2C2C2C]">
+                Looking for something more customizable? Our Headless CMS
+                Solutions with custom frontend designs offer the flexibility and
+                scalability your growing business needs. </p>
+                
+                <p class="text-[#2C2C2C]">
+                  And if you're tackling
+                complex challenges, our Consultation services provide the expert
+                guidance and personalized strategies to navigate the digital
+                landscape effectively. Let's figure out together which service
+                will help launch your site’s success.
+              </p>
+              <!-- Content Text -->
+              <a href="#" class="group relative z-10 inline-block">
+                <div
+                  class="btn is-large is-rounded border-black bg-[#F6F9F0] text-black"
+                >
+                  Coming Soon
+                </div>
+                <div
+                  class="is-rounded absolute inset-0 -z-10 translate-x-[5px] translate-y-[5px] border border-black bg-black transition-all duration-300 ease-linear group-hover:translate-x-0 group-hover:translate-y-0"
+                >
+                </div>
+              </a>
+            </div>
+            <!-- Content Block Left -->
+            <!-- Content Block Right -->
+            <div class="jos order-2 lg:order-1" data-jos_animation="fade-left">
+              <div
+                class="mx-auto lg:mx-0 max-w-full sm:max-w-[80%] md:max-w-[50%] lg:max-w-full"
+              >
+                <Image
+                  src="https://images.pexels.com/photos/3769021/pexels-photo-3769021.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
+                  alt="content-img-1"
+                  width="410"
+                  height="410"
+                  class="h-auto w-full"
+                />
+              </div>
+            </div>
+            <!-- Content Block Right -->
+          </div>
+          <!-- Content Area Single -->
+        </div>
+      </div>
+      <!-- Section Container -->
+    </div>
+    <!-- Section Space -->
+  </div>
+  <!-- Section Background -->
+</section>
+
+<style></style>

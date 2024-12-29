@@ -1,0 +1,18 @@
+---
+interface Props {
+  href: string;
+  text: string;
+}
+
+const { href, text } = Astro.props;
+---
+
+<a href={href} class="group relative z-10 hidden sm:inline-block">
+  <div class="btn is-rounded border-black bg-[#F6F9F0] text-black">
+    {text}
+  </div>
+  <div
+    class="is-rounded absolute inset-0 -z-10 translate-x-[5px] translate-y-[5px] border border-black bg-black transition-all duration-300 ease-linear group-hover:translate-x-0 group-hover:translate-y-0"
+  >
+  </div>
+</a>

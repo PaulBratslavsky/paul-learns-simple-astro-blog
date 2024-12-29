@@ -1,0 +1,33 @@
+---
+interface Props {
+  feature: {
+    title: string;
+    description: string;
+    color: string;
+    count: number;
+  };
+}
+
+const {
+  feature: { title, description, color, count },
+} = Astro.props;
+---
+
+<div class="jos" data-jos_animation="fade-left" data-jos_delay="0">
+  <div class="mb-7">
+    <span
+      class={`inline-flex h-[50px] w-[50px] flex-none items-center justify-center rounded-[50%] bg-[${color}]`}
+    >
+      <span class="text-black text-2xl font-semibold">{count}</span>
+    </span>
+  </div>
+  <h2 class="block text-2xl mb-6 text-black">
+    {title}
+  </h2>
+
+  <blockquote class="mb-4 text-xl text-black lg:text-2xl">
+    {description}
+  </blockquote>
+</div>
+
+<style></style>

@@ -1,0 +1,27 @@
+{
+  "name": "frontend",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/tailwind": "^5.1.4",
+    "@types/qs": "^6.9.17",
+    "astro": "^5.1.1",
+    "marked": "^15.0.4",
+    "npm-check-updates": "^17.1.13",
+    "qs": "^6.13.1",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.2"
+  },
+  "devDependencies": {
+    "accessible-astro-components": "^3.0.1",
+    "sass": "^1.83.0"
+  }
+}

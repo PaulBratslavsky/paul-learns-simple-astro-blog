@@ -1,0 +1,132 @@
+---
+import "../styles/global.css";
+import SiteMeta from "../components/SiteMeta.astro";
+
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+  author?: string;
+}
+
+const {
+  title = "Paul Learns Blog",
+  description = "Blog about what I'm learning",
+  image = "/social-preview-image.png",
+  author = "PB",
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+
+    <!-- favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.ico" />
+
+    <SiteMeta
+      title={title}
+      description={description.substring(0, 100)}
+      url={Astro.site
+        ? `${Astro.site}/${title.toLowerCase().replaceAll(" ", "-")}`
+        : `https://accessible-astro.dev/${title.toLowerCase().replaceAll(" ", "-")}`}
+      image={image}
+      author={author}
+    />
+  </head>
+  <body>
+    <div class="page-wrapper relative z-[1] bg-[#F6F9F0]">
+      <Header />
+      <div class="min-h-[calc(100vh-76px)]"><slot /></div>
+      <Footer />
+    </div>
+  </body><style is:global>
+    .rich-text {
+      h1 {
+        font-size: 4.25rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        font-family: Outfit, sans-serif;
+      }
+      h2 {
+        font-size: 2.75rem;
+        font-weight: 600;
+        margin-bottom: 1.5rem;
+        font-family: Outfit, sans-serif;
+      }
+      h3 {
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        font-family: Outfit, sans-serif;
+      }
+      h4 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        font-family: Outfit, sans-serif;
+      }
+      h5 {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        font-family: Outfit, sans-serif;
+      }
+      h6 {
+        font-size: 0.875rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        font-family: Outfit, sans-serif;
+      }
+
+      ul {
+        list-style-type: disc;
+        padding-left: 1rem;
+        margin-bottom: 1rem;
+      }
+      ol {
+        list-style-type: decimal;
+        padding-left: 1rem;
+        margin-bottom: 1rem;
+      }
+      li {
+        margin-bottom: 0.5rem;
+      }
+      blockquote {
+        border-left: 4px solid #0070f3;
+        padding-left: 1rem;
+        margin-bottom: 1rem;
+      }
+      code {
+        font-family: "Fira Code", monospace;
+        font-size: 0.875rem;
+        background-color: #191818;
+        color: #fff;
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+      }
+      pre {
+        font-family: "Fira Code", monospace;
+        font-size: 0.875rem;
+        background-color: #181919;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        margin-bottom: 1rem;
+        overflow-x: auto;
+      }
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+      strong {
+        font-weight: 600;
+      }
+    }
+  </style>
+</html>

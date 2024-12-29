@@ -1,0 +1,67 @@
+---
+interface Props {}
+
+const {} = Astro.props;
+---
+
+<!--...::: Header Start :::... -->
+<header
+  class="site-header site-header--absolute is--white py-3"
+  id="sticky-menu"
+>
+  <div class="container-default">
+    <div class="flex items-center justify-between gap-x-8">
+      <a href="/" class="flex justify-center items-center">
+        <!-- <img
+           src="assets/img/logo-full-dark.png"
+           alt="Masco"
+           width="109"
+           height="24"
+         /> -->
+        <h2 class="text-xl">Paul Learns</h2>
+      </a>
+
+      <nav class="hidden md:flex items-center gap-6">
+        <ul class="flex gap-4">
+          <li>
+            <a
+              href="/#top"
+              class="btn-text hidden hover:text-black sm:inline-block">Home</a
+            >
+          </li>
+          <li>
+            <a
+              href="/blog"
+              class="btn-text hidden hover:text-black sm:inline-block">Blog</a
+            >
+          </li>
+        </ul>
+        <a
+          href="https://www.youtube.com/@CodingAfterThirty"
+          target="_blank"
+          class="group relative z-10 hidden sm:inline-block"
+        >
+          <div class="btn is-rounded border-black bg-[#F6F9F0] text-black">
+            YouTube
+          </div>
+          <div
+            class="is-rounded absolute inset-0 -z-10 translate-x-[5px] translate-y-[5px] border border-black bg-black transition-all duration-300 ease-linear group-hover:translate-x-0 group-hover:translate-y-0"
+          >
+          </div>
+        </a>
+        <!-- Responsive Offcanvas Menu Button -->
+      </nav>
+      <!-- Header User Event -->
+    </div>
+  </div>
+</header>
+<!--...::: Header End :::... -->
+
+<style>
+  .site-header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: wheat;
+  }
+</style>

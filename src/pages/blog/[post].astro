@@ -1,0 +1,110 @@
+---
+import qs from "qs";
+import { marked } from "marked";
+import Layout from "../../layouts/Layout.astro";
+import { Breadcrumbs, BreadcrumbsItem } from "accessible-astro-components";
+import { getStrapiMedia } from "../../lib/utils";
+import fetchApi from "../../lib/strapi";
+
+// import OptimizedImage from "../../components/OptimizedImage.astro";
+
+interface Article {
+  id: string;
+  title: string;
+  description: string;
+  content: string;
+  slug: string;
+  image: {
+    url: string;
+    alternativeText: string;
+  };
+}
+
+interface Response {
+    data: [
+      {
+        id: number;
+        title: string;
+        description: string;
+        tag: string;
+        createdAt: string;
+        updatedAt: string;
+        publishedAt: string;
+        documentId: string;
+        posts: Article[];
+      }
+  ];
+}
+
+export async function getStaticPaths(): Promise<any> {
+  const query = qs.stringify({
+    sort: ["title:asc"],
+    filters: {
+      tag: {
+        $eq: "my-cms-corner",
+      },
+    },
+    populate: {
+      posts: {
+        populate: {
+          image: {
+            fields: ["url", "alternativeText"],
+          },
+        },
+      },
+    },
+
+    publicationState: "live",
+    locale: ["en"],
+  });
+
+  const response = await fetchApi<Response>({
+    endpoint: "post-groups",
+    query: query,
+  });
+
+  console.log(response, "what is this ok");
+
+  const articles = response.data[0].posts;
+
+  return articles.map((article: Article) => {
+    return {
+      params: { post: article.slug },
+      props: { article: article },
+    };
+  });
+}
+
+const { article } = Astro.props;
+const { title, description, content, slug, image } = article as Article;
+const imageUrl = getStrapiMedia(image.url);
+---
+
+<Layout title={title} description={description}>
+  <div class="container mx-auto my-5">
+    <Breadcrumbs>
+      <BreadcrumbsItem href="/" label="Home" />
+      <BreadcrumbsItem href="/blog" label="Blog" />
+      <BreadcrumbsItem currentPage={true} label={slug} />
+    </Breadcrumbs>
+  </div>
+  <section>
+    {
+      imageUrl && (
+        <div class="overflow-hidden">
+          <img
+            src={imageUrl}
+            alt={image.alternativeText}
+            class="w-full h-[500px] object-cover"
+          />
+        </div>
+      )
+    }
+
+    <div class="max-w-5xl mx-auto my-12 rich-text">
+      <article set:html={marked.parse(content)} />
+    </div>
+  </section>
+</Layout>
+
+<style></style>

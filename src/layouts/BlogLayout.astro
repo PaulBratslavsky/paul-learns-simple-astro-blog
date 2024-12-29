@@ -1,0 +1,26 @@
+---
+import Layout from "./Layout.astro";
+
+type Props = {
+  title: string;
+  description: string;
+};
+
+const { title, description } = {
+  title: "Get in touch",
+  description: "We'd love to hear from you. Send us a message and we'll get back to you as soon as possible.",
+} as Props
+
+---
+
+<Layout title={title} description={description} >
+  <div class="bg-[#48c96c] py-12 section-cta">
+    <div class="mx-auto max-w-4xl">
+      <h1>{title}</h1>
+      <p>{description}</p>
+    </div>
+  </div>
+  <div class="mx-auto max-w-4xl">
+    <slot />
+  </div>
+</Layout>

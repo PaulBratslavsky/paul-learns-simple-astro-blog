@@ -1,0 +1,79 @@
+---
+import FeatureItem from "./FeatureItem.astro";
+
+interface Props {
+  features?: {
+    title: string;
+    description: string;
+    color: string;
+    count: number;
+  }[];
+}
+
+const {
+  features = [
+    {
+      title: "Low Code Solutions",
+      description:
+        "Set-up and customization of low-code platforms such as Squarespace and WordPress.",
+      color: "#48C96C",
+      count: 1,
+    },
+    {
+      title: "Headless CMS & Custom Frontend",
+      description:
+        "Integration of headless CMS platforms like Strpai and others with custom frontend development.",
+      color: "#FC6ADC",
+      count: 2,
+    },
+    {
+      title: "Consultation",
+      description:
+        "Personalized expert advice on CMS selection, architecture, and optimization; ongoing support and training.",
+      color: "#FFA767",
+      count: 3,
+    },
+  ],
+} = Astro.props;
+---
+
+<!--...::: Testimonial Section Start :::... -->
+<section id="services" class="section-testimonial">
+  <!-- Section Background -->
+  <div class="bg-[#EAEEE3]">
+    <!-- Section Space -->
+    <div class="section-space">
+      <!-- Section Container -->
+      <div class="container-default">
+        <!-- Section Content Wrapper -->
+        <div class="jos mb-[60px] xl:mb-20">
+          <!-- Section Content Block -->
+          <div class="max-w-[746px]">
+            <div class="mb-5">
+              <h2
+                class="font-Outfit text-4xl font-medium uppercase leading-[1.15] -tracking-[2px] text-black sm:text-5xl lg:text-6xl xl:text-[70px] xxl:text-[80px]"
+              >
+                What we can help you with
+              </h2>
+            </div>
+          </div>
+          <!-- Section Content Block -->
+        </div>
+        <!-- Section Content Wrapper -->
+
+        <div
+          class="grid grid-cols-1 gap-x-10 gap-y-10 md:grid-cols-2 lg:grid-cols-3 py-10"
+        >
+          <!-- Features Item -->
+          {features.map((item) => <FeatureItem feature={item} />)}
+        </div>
+      </div>
+      <!-- Section Container -->
+    </div>
+    <!-- Section Space -->
+  </div>
+  <!-- Section Background -->
+</section>
+<!--...::: Testimonial Section End :::... -->
+
+<style></style>
