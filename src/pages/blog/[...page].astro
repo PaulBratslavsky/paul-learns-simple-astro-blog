@@ -30,12 +30,16 @@ interface Page {
   currentPage: number;
 }
 
-export async function getStaticPaths({ paginate }: { paginate: (items: Article[], options: { pageSize: number }) => any }): Promise<any> {
+export async function getStaticPaths({
+  paginate,
+}: {
+  paginate: (items: Article[], options: { pageSize: number }) => any;
+}): Promise<any> {
   const query = qs.stringify({
     sort: ["title:asc"],
     filters: {
       tag: {
-        $eq: "my-cms-corner",
+        $eq: "paul-learns",
       },
     },
     populate: {
@@ -64,8 +68,8 @@ export async function getStaticPaths({ paginate }: { paginate: (items: Article[]
         publishedAt: string;
         documentId: string;
         posts: Article[];
-      }
-    ]
+      },
+    ];
   }
 
   const response = await fetchApi<Response>({
@@ -73,19 +77,13 @@ export async function getStaticPaths({ paginate }: { paginate: (items: Article[]
     query: query,
   });
 
-
   const articles = response.data[0].posts;
-
-  console.log(articles, "what is this ok");
-
-
 
   if (articles.length === 0) throw new Error("No articles found");
   return paginate(articles, { pageSize: 9 });
 }
 
 const { page } = Astro.props as { page: Page };
-
 ---
 
 <Layout title="Articles" description="All articles">
@@ -113,31 +111,31 @@ const { page } = Astro.props as { page: Page };
               page.data.map((article: Article) => {
                 const { title, slug, description, image } = article;
                 return (
-                  <div class="jos">
-                    <div class="group">
-                      <div class="hover-solid-shadow">
-                        <div class="overflow-hidden rounded-[10px] h-[250px]">
-                          <img
-                            src={getStrapiMedia(image.url)}
-                            alt="portfolio-modern-img-1"
-                            width="406"
-                            height="350"
-                            class="h-full w-full object-cover transition-all duration-300 ease-in-out group-hover:scale-105"
-                          />
+                  <a href={"/blog/" + slug} class="hover:text-ColorBlack ">
+                    <div class="jos">
+                      <div class="group">
+                        <div class="hover-solid-shadow">
+                          <div class="overflow-hidden rounded-[10px] h-[250px]">
+                            <img
+                              src={getStrapiMedia(image.url)}
+                              alt="portfolio-modern-img-1"
+                              width="406"
+                              height="350"
+                              class="h-full w-full object-cover transition-all duration-300 ease-in-out group-hover:scale-105"
+                            />
+                          </div>
                         </div>
-                      </div>
-                      <div class="mt-8">
-                        <div class="mb-3 flex flex-wrap gap-2 text-xl leading-[1.33] -tracking-[0.5px] text-ColorBlack group-hover:text-ColorBlack lg:flex-nowrap xl:text-2xl">
-                          <a href={"/blog/" + slug} class="hover:text-ColorBlack ">
+                        <div class="mt-8">
+                          <div class="mb-3 flex flex-wrap gap-2 text-xl leading-[1.33] -tracking-[0.5px] text-ColorBlack group-hover:text-ColorBlack lg:flex-nowrap xl:text-2xl">
                             {title}
-                          </a>
+                          </div>
+                          <p class="line-clamp-2 text-base sm:max-w-[350px]">
+                            {description}
+                          </p>
                         </div>
-                        <p class="line-clamp-2 text-base sm:max-w-[350px]">
-                          {description}
-                        </p>
                       </div>
                     </div>
-                  </div>
+                  </a>
                 );
               })
             }
