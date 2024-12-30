@@ -1,82 +1,27 @@
 ---
-import qs from "qs";
 import { marked } from "marked";
 import Layout from "../../layouts/Layout.astro";
 import { Breadcrumbs, BreadcrumbsItem } from "accessible-astro-components";
 import { getStrapiMedia } from "../../lib/utils";
-import fetchApi from "../../lib/strapi";
+import { getCollection } from 'astro:content';
 
 // import OptimizedImage from "../../components/OptimizedImage.astro";
 
-interface Article {
-  id: string;
-  title: string;
-  description: string;
-  content: string;
-  slug: string;
-  image: {
-    url: string;
-    alternativeText: string;
-  };
-}
-
-interface Response {
-    data: [
-      {
-        id: number;
-        title: string;
-        description: string;
-        tag: string;
-        createdAt: string;
-        updatedAt: string;
-        publishedAt: string;
-        documentId: string;
-        posts: Article[];
-      }
-  ];
-}
-
-export async function getStaticPaths(): Promise<any> {
-  const query = qs.stringify({
-    sort: ["title:asc"],
-    filters: {
-      tag: {
-        $eq: "paul-learns",
-      },
-    },
-    populate: {
-      posts: {
-        populate: {
-          image: {
-            fields: ["url", "alternativeText"],
-          },
-        },
-      },
-    },
-
-    publicationState: "live",
-    locale: ["en"],
-  });
-
-  const response = await fetchApi<Response>({
-    endpoint: "post-groups",
-    query: query,
-  });
-
-  console.log(response, "what is this ok");
-
-  const articles = response.data[0].posts;
-
-  return articles.map((article: Article) => {
+export async function getStaticPaths() {
+  const strapiPosts = await getCollection("strapiPostsLoader");
+  
+  const articles = strapiPosts.map((article) => {
     return {
-      params: { post: article.slug },
-      props: { article: article },
+      params: { post: article.data.slug },
+      props: { article: article.data },
     };
   });
+
+  return articles;
 }
 
 const { article } = Astro.props;
-const { title, description, content, slug, image } = article as Article;
+const { title, description, content, slug, image } = article;
 const imageUrl = getStrapiMedia(image.url);
 ---
 

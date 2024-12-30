@@ -1,22 +1,26 @@
 ---
-import qs from "qs";
-import { getStrapiMedia } from "../../lib/utils";
+import { getCollection } from "astro:content";
 import { Pagination } from "accessible-astro-components";
-
 import Layout from "../../layouts/Layout.astro";
-import fetchApi from "../../lib/strapi";
-
 import ButtonLink from "../../components/ButtonLink.astro";
+import { getStrapiMedia } from "../../lib/utils";
 
 interface Article {
   id: string;
+  documentId: string;
   title: string;
   description: string;
   slug: string;
   image: {
     url: string;
-    alternativeText: string;
+    alternativeText: string | null;
+    id: number;
+    documentId: string;
   };
+  content: string;
+  createdAt: string;
+  updatedAt: string;
+  publishedAt: string;
 }
 
 interface Page {
@@ -35,49 +39,14 @@ export async function getStaticPaths({
 }: {
   paginate: (items: Article[], options: { pageSize: number }) => any;
 }): Promise<any> {
-  const query = qs.stringify({
-    sort: ["title:asc"],
-    filters: {
-      tag: {
-        $eq: "paul-learns",
-      },
-    },
-    populate: {
-      posts: {
-        populate: {
-          image: {
-            fields: ["url", "alternativeText"],
-          },
-        },
-      },
-    },
+  const strapiPosts = await getCollection("strapiPostsLoader");
 
-    publicationState: "live",
-    locale: ["en"],
+  const articles = strapiPosts.map((article) => {
+    return {
+      ...article.data,
+      id: article.data.id.toString(),
+    };
   });
-
-  interface Response {
-    data: [
-      {
-        id: number;
-        title: string;
-        description: string;
-        tag: string;
-        createdAt: string;
-        updatedAt: string;
-        publishedAt: string;
-        documentId: string;
-        posts: Article[];
-      },
-    ];
-  }
-
-  const response = await fetchApi<Response>({
-    endpoint: "post-groups",
-    query: query,
-  });
-
-  const articles = response.data[0].posts;
 
   if (articles.length === 0) throw new Error("No articles found");
   return paginate(articles, { pageSize: 9 });
@@ -163,3 +132,7 @@ const { page } = Astro.props as { page: Page };
   </div>
   <!--...::: Portfolio Section End :::... -->
 </Layout>
+
+<!--
+
+-->
